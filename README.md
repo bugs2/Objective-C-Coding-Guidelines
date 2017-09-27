@@ -3,12 +3,12 @@
 这篇编码风格指南概括了iOS小组的编码规范，风格问题没有最好，大家统一就行，建议尽快熟悉遵循
 
 ## 介绍
-###参考三个源头
+###  参考三个源头
 * [raywenderlich.com Objective-C编码规范](https://github.com/samlaudev/Objective-C-Coding-Style)
 * [Objective-C-Coding-Guidelines-In-Chinese](https://github.com/samlaudev/Objective-C-Coding-Style)
 * [Chinamobo Objective-C 编码规范](https://github.com/Chinamobo/iOS-Team-Norms/blob/master/CodeStyle.md)
 
-###重新排版整合成一份有两个目的
+### 重新排版整合成一份有两个目的
 * 根据自身情况，有一些小修改
 * 为方便查看
 
@@ -124,7 +124,7 @@ UIColor *myColour = [UIColor whiteColor];
 ```
 
 <b id="spacing"></b>
-## 空格
+## 缩进
 
 * 缩进使用**4**个空格，确保在Xcode偏好设置来设置。(raywenderlich.com使用**2**个空格)
 * 方法大括号和其他大括号(`if`/`else`/`switch`/`while` 等.)总是在同一行语句打开但在新行中关闭。
@@ -329,12 +329,12 @@ void (^largeBlock)(void) = ^{
 ```
 
 <b id="comments"></b>
-##注释
+## 注释
 
 读没有注释代码的痛苦你我都体会过，好的注释不仅能让人轻松读懂你的程序，还能提升代码的逼格。注意注释是为了让别人看懂，而不是仅仅你自己。
 
 <b id="file-comments"></b>
-###文件注释
+### 文件注释
 
 每一个文件都**必须**写文件注释，文件注释通常包含
 
@@ -347,17 +347,13 @@ void (^largeBlock)(void) = ^{
 一段良好文件注释的栗子：
 
 ```objective-c
-/*******************************************************************************
-	Copyright (C), 2011-2013, Andrew Min Chang
-
-	File name: 	AMCCommonLib.h
-	Author:		Andrew Chang (Zhang Min) 
-	E-mail:		LaplaceZhang@126.com
-	
-	Description: 	
-			This file provide some covenient tool in calling library tools. One can easily include 
-		library headers he wants by declaring the corresponding macros. 
-			I hope this file is not only a header, but also a useful Linux library note.
+//
+//  commonLib.h
+//  TBox
+//  Description: 	
+		This file provide some covenient tool in calling library tools. One can easily include 
+	library headers he wants by declaring the corresponding macros. 
+		I hope this file is not only a header, but also a useful Linux library note.
 			
 	History:
 		2012-??-??: On about come date around middle of Year 2012, file created as "commonLib.h"
@@ -372,51 +368,47 @@ void (^largeBlock)(void) = ^{
 		2013-01-18: Add CFG_LIB_STR_NUM.
 		2013-01-22: Add CFG_LIB_TIMER.
 		2013-01-22: Remove CFG_LIB_DATA_TYPE because there is already AMCDataTypes.h
-
-	Copyright information: 
-			This file was intended to be under GPL protocol. However, I may use this library
-		in my work as I am an employee. And my company may require me to keep it secret. 
-		Therefore, this file is neither open source nor under GPL control. 
-		
-********************************************************************************/
+//  Created by ZC on 2017/2/18.
+//  Copyright © 2017年 Hikvison AutoMotive Technology. All rights reserved.
+//
 ```
 
 *文件注释的格式通常不作要求，能清晰易读就可以了，但在整个工程中风格要统一。*
 
 <b id="code-comments"></b>
-###代码注释
+### 代码注释
 
 好的代码应该是“自解释”（self-documenting）的，但仍然需要详细的注释来说明参数的意义、返回值、功能以及可能的副作用。
 
-方法、函数、类、协议、类别的定义都需要注释，推荐采用Apple的标准注释风格，好处是可以在引用的地方`alt+点击`自动弹出注释，非常方便。
+方法、函数、类、协议、类别的定义都需要注释，推荐采用Apple的标准注释风格，有两种风格。  
+1./** */ 风格，使用`alt+cmd+.`自动生成，好处是可以在引用的地方`alt+点击`自动弹出注释，非常方便。  
+建议用在头文件方法、函数、属性说明
 
-有很多可以自动生成注释格式的插件，推荐使用[VVDocumenter](https://github.com/onevcat/VVDocumenter-Xcode)：
-
-![Screenshot](https://raw.github.com/onevcat/VVDocumenter-Xcode/master/ScreenShot.gif)
+2.// 风格，使用`cmd+.`自动生成，好处是比较简单。
+大部分代码使用//注释，统一放在注释代码顶部，并保持相同缩进
 
 一些良好的注释：
 
 ```objective-c
 /**
- *  Create a new preconnector to replace the old one with given mac address.
- *  NOTICE: We DO NOT stop the old preconnector, so handle it by yourself.
- *
- *  @param type       Connect type the preconnector use.
- *  @param macAddress Preconnector's mac address.
+ Create a new preconnector to replace the old one with given mac address.
+ 
+ NOTICE: We DO NOT stop the old preconnector, so handle it by yourself.
+ @param type       Connect type the preconnector use.
+ @param macAddress Preconnector's mac address.
  */
 - (void)refreshConnectorWithConnectType:(IPCConnectType)type  Mac:(NSString *)macAddress;
 
 /**
- *  Stop current preconnecting when application is going to background.
+ Stop current preconnecting when application is going to background.
  */
 -(void)stopRunning;
 
 /**
- *  Get the COPY of cloud device with a given mac address.
- *
- *  @param macAddress Mac address of the device.
- *
- *  @return Instance of IPCCloudDevice.
+ Get the COPY of cloud device with a given mac address.
+ 
+ @param macAddress Mac address of the device.
+ @return Instance of IPCCloudDevice.
  */
 -(IPCCloudDevice *)getCloudDeviceWithMac:(NSString *)macAddress;
 
@@ -431,7 +423,7 @@ void (^largeBlock)(void) = ^{
 协议、委托的注释要明确说明其被触发的条件：
 
 ```objective-c
-/** Delegate - Sent when failed to init connection, like p2p failed. */
+// Delegate - Sent when failed to init connection, like p2p failed.
 -(void)initConnectionDidFailed:(IPCConnectHandler *)handler;
 ```
 
@@ -446,12 +438,12 @@ void (^largeBlock)(void) = ^{
 **定义在头文件里的接口方法、属性必须要有注释！**
 
 <b id="naming"></b>
-##命名
+## 命名
 
 <b id="name-base-rule"></b>
-###基本原则
+### 基本原则
 
-####清晰
+#### 清晰
 Apple命名规则尽可能坚持，特别是与这些相关的[memory management rules](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html) ([NARC](http://stackoverflow.com/a/2865194/340508))。
 命名应该尽可能的清晰和简洁，但在Objective-C中，清晰比简洁更重要。由于Xcode强大的自动补全功能，我们不必担心名称过长的问题。
 
@@ -484,7 +476,7 @@ setBkgdColor:
 然而，有部分单词简写在Objective-C编码过程中是非常常用的，以至于成为了一种规范，这些简写可以在代码中直接使用，下面列举了部分：
 
 ```objective-c
-alloc   == Allocate					max    == Maximum
+alloc   == Allocate				max    == Maximum
 alt     == Alternate				min    == Minimum
 app     == Application				msg    == Message
 calc    == Calculate				nib    == Interface Builder archive
@@ -527,11 +519,11 @@ sendPort
 //有歧义，是返回一个名字属性的值还是display一个name的动作？
 displayName
 ```
-####一致性
+#### 一致性
 
 整个工程的命名风格要保持一致性，最好和苹果SDK的代码保持统一。不同类中完成相似功能的方法应该叫一样的名字，比如我们总是用`count`来返回集合的个数，不能在A类中使用`count`而在B类中使用`getNumber`。
 
-####使用前缀
+#### 使用前缀
 
 如果代码需要打包成Framework给别的工程使用，或者工程项目非常庞大，需要拆分成不同的模块，使用命名前缀是非常有用的。
 
@@ -542,7 +534,7 @@ displayName
 - 命名前缀的时候不要和苹果SDK框架冲突。
 
 <b id="name-class-protocol"></b>
-###类和协议
+### 类和协议
 
 类名以大写字母开头，应该包含一个*名词*来表示它代表的对象类型，同时可以加上必要的前缀，比如`NSString`, `NSDate`, `NSScanner`, `NSApplication`等等。
 
@@ -551,7 +543,7 @@ displayName
 有些协议本身包含了很多不相关的功能，主要用来为某一特定类服务，这时候可以直接用类名来命名这个协议，比如`NSObject`协议，它包含了id对象在生存周期内的一系列方法。
 
 <b id="name-headfile"></b>
-###头文件
+### 头文件
 
 源码的头文件名应该清晰地暗示它的功能和包含的内容：
 
@@ -564,7 +556,7 @@ displayName
 - Framework中有时候会实现在别的框架中类的类别扩展，这样的文件通常使用`被扩展的框架名`+`Additions`的方式来命名，比如`NSBundle+Additions.h`。
 
 <b id="name-functions"></b>
-###函数
+### 函数
 
 在很多场合仍然需要用到函数，比如说如果一个对象是一个单例，那么应该使用函数来代替类方法执行相关操作。
 
@@ -603,7 +595,7 @@ BOOL NSDecimalIsNotANumber(const NSDecimal *decimal)
 ## 方法
 
 <b id="methods-name"></b>
-### 命名
+###  命名
 
 在方法签名中，应该在方法类型(-/+ 符号)之后有一个空格。在方法各个段之间应该也有一个空格(符合Apple的风格)。在参数之前应该包含一个具有描述性的关键字来描述参数。
 
@@ -705,7 +697,7 @@ Objective-C的方法名通常都比较长，这是为了让程序有更好地可
 ...title:(NSString *)aString
 ```
 <b id="methods-getter-setter"></b> 
-###存取方法（Accessor Methods）
+### 存取方法（Accessor Methods）
 
 存取方法是指用来获取和设置类属性值的方法，属性的不同类型，对应着不同的存取方法规范：
 
@@ -763,7 +755,7 @@ Objective-C的方法名通常都比较长，这是为了让程序有更好地可
 ```
 
 <b id="methods-delegate"></b>
-###委托方法
+### 委托方法
 
 当特定的事件发生时，对象会触发它注册的委托方法。委托是Objective-C中常用的传递消息的方式。委托有它固定的命名范式。
 
@@ -787,7 +779,7 @@ Objective-C的方法名通常都比较长，这是为了让程序有更好地可
 ```
 
 <b id="methods-Collection"></b>
-###集合操作类方法（Collection Methods）
+### 集合操作类方法（Collection Methods）
 
 有些对象管理着一系列其它对象或者元素的集合，需要使用类似“增删查改”的方法来对集合进行操作，这些方法的命名范式一般为：
 
@@ -823,7 +815,7 @@ Objective-C的方法名通常都比较长，这是为了让程序有更好地可
 ```
 
 <b id="methods-Notifactions"></b>
-###通知
+### 通知
 通知常用于在模块间传递消息，所以通知要尽可能地表示出发生的事件，通知的命名范式是：
 	
 	[触发通知的类名] + [Did | Will] + [动作] + Notification
@@ -1141,7 +1133,7 @@ if (!error) return success;
 ```
 
 <b id="ternary-operator"></b>
-### 三元操作符
+###  三元操作符
 
 当需要提高代码的清晰性和简洁性时，三元操作符`?:`才会使用。单个条件求值常常需要它。多个条件求值时，如果使用`if`语句或重构成实例变量时，代码会更加易读。一般来说，最好使用三元操作符是在根据条件来赋值的情况下。
 
@@ -1172,7 +1164,7 @@ result = a > b ? x = c > d ? c : d : y;
 每个人都有自己的编码风格，这里总结了一些比较好的Cocoa编程风格和注意点。
 
 <b id="property-attributes"></b>
-### 属性特性
+###  属性特性
 
 所有属性特性应该显式地列出来，有助于新手阅读代码。属性特性的顺序应该是storage、atomicity，与在Interface Builder连接UI元素时自动生成代码一致。
 
@@ -1207,7 +1199,7 @@ NSString应该使用`copy` 而不是 `strong`的属性特性。
 ```
 
 <b id="codestyle-dot-notation-syntax"></b>
-### 点符号语法
+###  点符号语法
 不要用点分语法来调用方法，只用来访问属性。这样是为了防止代码可读性问题。
 
 ```objective-c
@@ -1240,7 +1232,7 @@ NSInteger arrayCount = self.array.count;
 UIApplication.sharedApplication.delegate;
 ```
 <b id="codestyle-underline"></b>
-### 下划线
+###  下划线
 
 当使用属性时，实例变量应该使用`self.`来访问和改变。这就意味着所有属性将会视觉效果不同，因为它们前面都有`self.`。
 
@@ -1249,7 +1241,7 @@ UIApplication.sharedApplication.delegate;
 局部变量不应该包含下划线。
 
 <b id="codestyle-literals"></b>
-### 字面值（语法糖）
+###  字面值（语法糖）
 
 应该使用可读性更好的语法糖来构造`NSArray`，`NSDictionary`等数据结构，避免使用冗长的`alloc`,`init`方法。
 
@@ -1331,7 +1323,7 @@ NSDictionary *stillWrong = @{
 };
 ```
 <b id="codestyle-init-methods"></b>
-### Init方法
+###  Init方法
 
 Init方法应该遵循Apple生成代码模板的命名规则。返回类型应该使用`instancetype`而不是`id`
 
@@ -1348,7 +1340,7 @@ Init方法应该遵循Apple生成代码模板的命名规则。返回类型应�
 查看关于instancetype的文章[Class Constructor Methods](#class-constructor-methods)
 
 <b id="codestyle-class-constructor-methods"></b>
-### 类构造方法
+###  类构造方法
 
 当类构造方法被使用时，它应该返回类型是`instancetype `而不是`id`。这样确保编译器正确地推断结果类型。
 
@@ -1361,7 +1353,7 @@ Init方法应该遵循Apple生成代码模板的命名规则。返回类型应�
 关于更多instancetype信息，请查看[NSHipster.com](http://nshipster.com/instancetype/)
 
 <b id="codestyle-cgrect-functions"></b>
-### CGRect函数
+###  CGRect函数
 
 当访问`CGRect`里的`x`, `y`, `width`, 或 `height`时，应该使用[`CGGeometry`函数](http://developer.apple.com/library/ios/#documentation/graphicsimaging/reference/CGGeometry/Reference/reference.html)而不是直接通过结构体来访问。引用Apple的`CGGeometry `:
 
@@ -1393,7 +1385,7 @@ CGRect frame = (CGRect){ .origin = CGPointZero, .size = frame.size };
 ```
 
 <b id="codestyle-golden-path"></b>
-### 黄金路径
+###  黄金路径
 
 当使用条件语句编码时，左手边的代码应该是"golden" 或 "happy"路径。也就是不要嵌套`if`语句，多个返回语句也是OK。
 
@@ -1420,7 +1412,7 @@ CGRect frame = (CGRect){ .origin = CGPointZero, .size = frame.size };
 ```
 
 <b id="codestyle-error-handling"></b>
-### 错误处理
+###  错误处理
 
 当方法通过引用来返回一个错误参数，判断返回值而不是错误变量。
 
@@ -1444,7 +1436,7 @@ if (error) {
 在成功的情况下，有些Apple的APIs记录垃圾值(garbage values)到错误参数(如果non-NULL)，那么判断错误值会导致false负值和crash。
 
 <b id="codestyle-singletons"></b>
-### 单例模式
+###  单例模式
 
 单例对象应该使用线程安全模式来创建共享实例。
 
@@ -1464,7 +1456,7 @@ if (error) {
 这会防止[possible and sometimes prolific crashes](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html).
 
 <b id="codestyle-line-breaks"></b>
-### 换行符
+###  换行符
 
 换行符是一个很重要的主题，因为它的风格指南主要为了打印和网上的可读性。
 
@@ -1482,24 +1474,24 @@ self.productsRequest = [[SKProductsRequest alloc]
 ```
 
 <b id="codestyle-xcode-project"></b>
-### Xcode工程
+###  Xcode工程
 
 物理文件应该与Xcode工程文件保持同步来避免文件扩张。任何Xcode分组的创建应该在文件系统的文件体现。代码不仅是根据**类型**来分组，而且还可以根据**功能**来分组，这样代码更加清晰。
 
 尽可能在target的Build Settings打开"Treat Warnings as Errors，和启用以下[additional warnings](http://boredzo.org/blog/archives/2009-11-07/warnings)。如果你需要忽略特殊的警告，使用 [Clang's pragma feature](http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas)。
 
 <b id="codestyle-not-new"></b>
-###不要使用new方法
+### 不要使用new方法
 
 尽管很多时候能用`new`代替`alloc init`方法，但这可能会导致调试内存时出现不可预料的问题。Cocoa的规范就是使用`alloc init`方法，使用`new`会让一些读者困惑。
 
 <b id="codestyle-simple-api"></b>
-###Public API要尽量简洁
+### Public API要尽量简洁
 
 共有接口要设计的简洁，满足核心的功能需求就可以了。不要设计很少会被用到，但是参数极其复杂的API。如果要定义复杂的方法，使用类别或者类扩展。
 
 <b id="codestyle-include-import"></b>
-###\#import和\#include
+### \#import和\#include
 
 `#import`是Cocoa中常用的引用头文件的方式，它能自动防止重复引用文件，什么时候使用`#import`，什么时候使用`#include`呢？
 
@@ -1518,7 +1510,7 @@ self.productsRequest = [[SKProductsRequest alloc]
 为什么不全部使用`#import`呢？主要是为了保证代码在不同平台间共享时不出现问题。
 
 <b id="codestyle-import-root"></b>
-###引用框架的根头文件
+### 引用框架的根头文件
 
 上面提到过，每一个框架都会有一个和框架同名的头文件，它包含了框架内接口的所有引用，在使用框架的时候，应该直接引用这个根头文件，而不是其它子模块的头文件，即使是你只用到了其中的一小部分，编译器会自动完成优化的。
 
@@ -1532,11 +1524,11 @@ self.productsRequest = [[SKProductsRequest alloc]
 ```
 
 <b id="codestyle-arc"></b>
-###使用ARC
+### 使用ARC
 
 除非想要兼容一些古董级的机器和操作系统，我们没有理由放弃使用ARC。在最新版的Xcode(6.2)中，ARC是自动打开的，所以直接使用就好了。
 
-###在init和dealloc中不要用存取方法访问实例变量
+### 在init和dealloc中不要用存取方法访问实例变量
 
 当`init``dealloc`方法被执行时，类的运行时环境不是处于正常状态的，使用存取方法访问变量可能会导致不可预料的结果，因此应当在这两个方法内直接访问实例变量。
 
@@ -1568,12 +1560,12 @@ self.productsRequest = [[SKProductsRequest alloc]
 }
 ```
 <b id="codestyle-release-resource"></b>
-###按照定义的顺序释放资源
+### 按照定义的顺序释放资源
 
 在类或者Controller的生命周期结束时，往往需要做一些扫尾工作，比如释放资源，停止线程等，这些扫尾工作的释放顺序应当与它们的初始化或者定义的顺序保持一致。这样做是为了方便调试时寻找错误，也能防止遗漏。
 
 <b id="codestyle-nsstring"></b>
-###保证NSString在赋值时被复制
+### 保证NSString在赋值时被复制
 
 `NSString`非常常用，在它被传递或者赋值时应当保证是以复制（copy）的方式进行的，这样可以防止在不知情的情况下String的值被其它对象修改。
 
@@ -1584,7 +1576,7 @@ self.productsRequest = [[SKProductsRequest alloc]
 ```
 
 <b id="codestyle-number-"></b>
-###使用NSNumber的语法糖
+### 使用NSNumber的语法糖
 
 使用带有`@`符号的语法糖来生成NSNumber对象能使代码更简洁：
 
@@ -1598,7 +1590,7 @@ NSNumber *myEnum = @(kMyEnum);
 ```
 
 <b id="codestyle-check-nil"></b>
-###nil检查
+### nil检查
 
 因为在Objective-C中向nil对象发送命令是不会抛出异常或者导致崩溃的，只是完全的“什么都不干”，所以，只在程序中使用nil来做逻辑上的检查。
 
@@ -1617,16 +1609,16 @@ if (nil == objc) {
 ```
 
 <b id="codestyle-thread-safe"></b>
-###属性的线程安全
+### 属性的线程安全
 
 定义一个属性时，编译器会自动生成线程安全的存取方法（Atomic），但这样会大大降低性能，特别是对于那些需要频繁存取的属性来说，是极大的浪费。所以如果定义的属性不需要线程保护，记得手动添加属性关键字`nonatomic`来取消编译器的优化。
 
 <b id="codestyle-weak-delegate"></b>
-###Delegate要使用弱引用
+### Delegate要使用弱引用
 
 一个类的Delegate对象通常还引用着类本身，这样很容易造成引用循环的问题，所以类的Delegate属性要设置为弱引用。
 
 ```objective-c
-/** delegate */
+//delegate
 @property (nonatomic, weak) id <IPCConnectHandlerDelegate> delegate;
 ```
